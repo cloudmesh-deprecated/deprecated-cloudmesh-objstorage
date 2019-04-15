@@ -19,8 +19,8 @@ class Provider(ObjectStorageABC):
 
     def __init__(self, service=None, config="~/.cloudmesh/cloudmesh4.yaml"):
         super().__init__(service=service, config=config)
-        ACCESS_KEY_ID: "AKIAYBVIJCLU3JP77SVY"
-        SECRET_ACCESS_KEY: "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"
+        ACCESS_KEY_ID: ""
+        SECRET_ACCESS_KEY: ""
         self.container_name = self.credentials['objstorage']
         # self.s3_resource = boto3.resource('s3',
         #                                   aws_access_key_id=self.credentials[
