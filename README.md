@@ -3,12 +3,12 @@
 
 ## Instalation for Users
 
-At this time we do not offer this but it will be
+At this time we do not offer this ~~but it will be
 
 ```bash
 pip install cloudmesh-community
 ```
-
+~~
 Gregor will set this up, so please do not do this yourself. 
 
 # Instalation for Developers
