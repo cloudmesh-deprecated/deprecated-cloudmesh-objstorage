@@ -25,7 +25,7 @@ pip install cloudmesh-installer
 cloudmesh-installer clone storage
 cloudmesh-installer install storage -e
 git clone git@github.com:cloudmesh/cloudmesh-objstorage.git
-cd sp19-616-111/project-code/cloudmesh-objstorage
+cd cloudmesh-objstorage
 pip install -e .
 ```
 
