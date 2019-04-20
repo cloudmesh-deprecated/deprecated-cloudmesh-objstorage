@@ -4,6 +4,7 @@ from cloudmesh.DEBUG import VERBOSE
 from cloudmesh.common.console import Console
 from botocore.exceptions import ClientError
 
+
 # from libmagic import magic
 #
 # BUG: des not follow named arguments in abc class
@@ -79,7 +80,8 @@ class Provider(ObjectStorageABC):
                 return False
         else:
             kind = type(src_data)
-            Console.error(f'Type of {kind} for the argument \'src_data\' is not supported.')
+            Console.error(
+                f'Type of {kind} for the argument \'src_data\' is not supported.')
             return False
 
         # Put the object

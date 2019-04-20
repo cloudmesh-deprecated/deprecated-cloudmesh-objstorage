@@ -70,8 +70,8 @@ class TestObject:
     def test_01_create_dir(self):
         HEADING()
         src = 'created_dir123'
-        dir = self.p.create_dir('aws', src)
-        pprint(dir)
+        directory = self.p.create_dir('aws', src)
+        pprint(directory)
 
         assert dir is not None
 
