@@ -1,4 +1,5 @@
-from abc import ABCMeta, abstractmethod
+from abc import ABCMeta
+
 from cloudmesh.management.configuration.config import Config
 
 
@@ -11,7 +12,7 @@ class ObjectStorageABC(metaclass=ABCMeta):
             self.credentials = config['cloudmesh']['objstorage'][service][
                 'credentials']
             self.kind = config['cloudmesh']['objstorage']['kind']
-            self.servise = service
+            self.service = service
         except:
             raise ValueError(f"object storage service {service} not specified")
 

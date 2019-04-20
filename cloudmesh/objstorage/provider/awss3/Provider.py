@@ -1,13 +1,3 @@
-import io
-import json
-
-from cloudmesh.storage.provider.gdrive.Authentication import Authentication
-import httplib2
-
-from apiclient.http import MediaFileUpload
-from apiclient.http import MediaIoBaseDownload
-from cloudmesh.management.configuration.config import Config
-from cloudmesh.common.util import path_expand
 from cloudmesh.objstorage.ObjectStorageABC import ObjectStorageABC
 
 

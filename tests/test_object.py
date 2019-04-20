@@ -24,7 +24,7 @@ class TestObject:
         writefile(path_expand(location), content)
 
     def setup(self):
-        self.p = cloudmesh.storage.provider.awss3.Provider.Provider(
+        self.p = cloudmesh.objstorage.provider.awss3.Provider.Provider(
             service="awss3")
         print('Success')
 
