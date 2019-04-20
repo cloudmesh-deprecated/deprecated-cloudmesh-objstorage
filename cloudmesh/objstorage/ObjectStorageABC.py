@@ -33,7 +33,7 @@ class ObjectStorageABC(metaclass=ABCMeta):
         """
         raise NotImplementedError
 
-    def put(self, source=None, destination=None, recursrive=False):
+    def put(self, source=None, destination=None, recursive=False):
         """
         puts the source on the service
         :param source: the source which either can be a directory or file
@@ -71,6 +71,7 @@ class ObjectStorageABC(metaclass=ABCMeta):
         """
         gets the destination and copies it in source
         :param directory: the directory which either can be a directory or file
+        :param filename: the filename
         :param recursive: in case of directory the recursive referes to all
                           subdirectories in the specified source
         :return: dict
