@@ -14,6 +14,7 @@ class ObjstorageCommand(PluginCommand):
 
         """
         ::
+
           Usage:
                 objstorage [--objstorage=SERVICE] create dir DIRECTORY
                 objstorage [--objstorage=SERVICE] copy SOURCE DESTINATION [--recursive]
