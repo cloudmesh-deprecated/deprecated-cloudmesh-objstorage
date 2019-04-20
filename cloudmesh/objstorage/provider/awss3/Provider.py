@@ -108,7 +108,7 @@ class Provider(ObjectStorageABC):
         # must return dict
 
     # TODO: use named arguments, see ObjectStorageABC
-    def copy(src_bucket_name, src_object_name,
+    def copy(self, src_bucket_name, src_object_name,
              dest_bucket_name, dest_object_name=None):
         """Copy an Amazon S3 bucket object
 
