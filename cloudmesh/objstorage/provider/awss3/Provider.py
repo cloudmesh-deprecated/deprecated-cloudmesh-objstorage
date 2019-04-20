@@ -37,7 +37,7 @@ class Provider(ObjectStorageABC):
         self.directory_marker_file_name = 'marker.txt'
         self.storage_dict = {}
 
-
+    # TODO: use named arguments, see ObjectStorageABC
     def get(self, bucket_name, object_name):
 
         """Retrieve an object from an Amazon S3 bucket
@@ -58,6 +58,7 @@ class Provider(ObjectStorageABC):
         # Return an open StreamingBody object
         return response['Body']
 
+    # TODO: use named arguments, see ObjectStorageABC
     def put(dest_bucket_name, dest_object_name, src_data):
         """Add an object to an Amazon S3 bucket
 
@@ -99,7 +100,10 @@ class Provider(ObjectStorageABC):
             if isinstance(src_data, str):
                 object_data.close()
         return True
+        # must return dict
 
+
+    # TODO: use named arguments, see ObjectStorageABC
     def copy(src_bucket_name, src_object_name,
                     dest_bucket_name, dest_object_name=None):
         """Copy an Amazon S3 bucket object
@@ -126,7 +130,9 @@ class Provider(ObjectStorageABC):
             logging.error(e)
             return False
         return True
+        # must return dict
 
+    # TODO: use named arguments, see ObjectStorageABC
     def list(bucket_name):
         """List the objects in an Amazon S3 bucket
 
@@ -144,6 +150,7 @@ class Provider(ObjectStorageABC):
             return None
         return response['Contents']
 
+    # TODO: use named arguments, see ObjectStorageABC
     def delete(bucket_name, object_names):
         """Delete multiple objects from an Amazon S3 bucket
 
@@ -163,3 +170,4 @@ class Provider(ObjectStorageABC):
             logging.error(e)
             return False
         return True
+        # must return dict
