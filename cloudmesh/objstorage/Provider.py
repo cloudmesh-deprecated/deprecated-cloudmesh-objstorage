@@ -1,6 +1,9 @@
-from cloudmesh.ojectstore.provider.awss3.Provider import Provider as Awss3Provider
+# noinspection PyPep8
+from cloudmesh.ojectstore.provider.awss3.Provider import \
+    Provider as Awss3Provider
 from cloudmesh.mongo.DataBaseDecorator import DatabaseUpdate
 from cloudmesh.objectsore.ObjectSoriageABC import ObjectStorageABC
+
 
 class Provider(ObjectStorageABC):
 
@@ -50,7 +53,7 @@ class Provider(ObjectStorageABC):
         """
         d = self.provider.list(self,
                                source=source,
-                               recusrive=recursive)
+                               recursive=recursive)
         d = self.cm_update(d)
 
         return d
@@ -70,19 +73,20 @@ class Provider(ObjectStorageABC):
         d = self.provider.get(self,
                               source=source,
                               destination=destination,
-                              recusrive=recursive)
+                              recursive=recursive)
         d = self.cm_update(d)
 
         return d
 
     # not yet sure if service is needed
     @DatabaseUpdate()
-    def get(self, source=None, destination=None, recusrive=False):
+    def get(self, source=None, destination=None, recursive=False):
         """
         gets the destination and copies it in source
         :param service: the name of the service in the yaml file
         :param source: the source which either can be a directory or file
-        :param destination: the destination which either can be a directory or file
+        :param destination: the destination which either can be a directory or
+                            file
         :param recursive: in case of directory the recursive referes to all
                           subdirectories in the specified source
         :return: dict
@@ -90,14 +94,14 @@ class Provider(ObjectStorageABC):
         d = self.provider.get(self,
                               source=source,
                               destination=destination,
-                              recusrive=recusrive)
+                              recursive=recursive)
 
         d = self.cm_update(d)
 
         return d
 
     @DatabaseUpdate()
-    def delete(self, source=None, recusrive=False):
+    def delete(self, source=None, recursive=False):
         """
         deletes the source
         :param service: the name of the service in the yaml file
@@ -108,14 +112,14 @@ class Provider(ObjectStorageABC):
         """
         d = self.provider.delete(self,
                                  source=source,
-                                 recusrive=recusrive)
+                                 recursive=recursive)
 
         d = self.cm_update(d)
 
         return d
 
     def search(self, directory=None, filename=None,
-               recusrive=False):
+               recursive=False):
         """
         gets the destination and copies it in source
         :param service: the name of the service in the yaml file
@@ -127,7 +131,7 @@ class Provider(ObjectStorageABC):
         d = self.provider.get(self,
                               directory=directory,
                               filename=filename,
-                              recusrive=recusrive)
+                              recursive=recursive)
 
         d = self.cm_update(d)
 

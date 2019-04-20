@@ -31,8 +31,8 @@ class TestObject:
     def test_01_create_source(self):
         # create source dir
 
-        # BUG
-        self.destination = "set the destination location here and use in tests"  # TODO
+        # BUG TODO
+        self.destination = "set the destination location here and use in tests"
 
         self.sourcedir = path_expand("~/.cloudmesh/objstorage/test/")
 

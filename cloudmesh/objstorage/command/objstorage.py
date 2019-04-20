@@ -1,11 +1,11 @@
-from __future__ import print_function
 from cloudmesh.shell.command import command
-from cloudmesh.shell.command import PluginCommand
-from cloudmesh.objstorage.api.manager import Manager
+from cloudmesh.shell.command import PluginCommand, map_parameters
 from cloudmesh.common.console import Console
 from cloudmesh.common.util import path_expand
 from cloudmesh.objstorage.provider.awss3.Provider import Provider
 from pprint import pprint
+from cloudmesh.common.parameter import Parameter
+from cloudmesh.variables import Variables
 
 
 # noinspection PyPep8

@@ -18,7 +18,6 @@ class ObjectStorageABC(metaclass=ABCMeta):
     def create_dir(self, directory=None):
         """
         creates a directory
-        :param service: the name of the service in the yaml file
         :param directory: the name of the directory
         :return: dict
         """
@@ -27,7 +26,6 @@ class ObjectStorageABC(metaclass=ABCMeta):
     def list(self, source=None, recursive=False):
         """
         lists the information as dict
-        :param service: the name of the service in the yaml file
         :param source: the source which either can be a directory or file
         :param recursive: in case of directory the recursive referes to all
                           subdirectories in the specified source
@@ -35,10 +33,9 @@ class ObjectStorageABC(metaclass=ABCMeta):
         """
         raise NotImplementedError
 
-    def put(self, source=None, destination=None, recusrive=False):
+    def put(self, source=None, destination=None, recursrive=False):
         """
         puts the source on the service
-        :param service: the name of the service in the yaml file
         :param source: the source which either can be a directory or file
         :param destination: the destination which either can be a directory or
                             file
@@ -51,7 +48,6 @@ class ObjectStorageABC(metaclass=ABCMeta):
     def get(self, source=None, destination=None, recursive=False):
         """
         gets the destination and copies it in source
-        :param service: the name of the service in the yaml file
         :param source: the source which either can be a directory or file
         :param destination: the destination which either can be a directory or
                             file
@@ -61,10 +57,9 @@ class ObjectStorageABC(metaclass=ABCMeta):
         """
         raise NotImplementedError
 
-    def delete(self, source=None, recusrive=False):
+    def delete(self, source=None, recursive=False):
         """
         deletes the source
-        :param service: the name of the service in the yaml file
         :param source: the source which either can be a directory or file
         :param recursive: in case of directory the recursive referes to all
                           subdirectories in the specified source
@@ -72,11 +67,9 @@ class ObjectStorageABC(metaclass=ABCMeta):
         """
         raise NotImplementedError
 
-    def search(self, directory=None, filename=None,
-               recusrive=False):
+    def search(self, directory=None, filename=None, recursive=False):
         """
         gets the destination and copies it in source
-        :param service: the name of the service in the yaml file
         :param directory: the directory which either can be a directory or file
         :param recursive: in case of directory the recursive referes to all
                           subdirectories in the specified source
