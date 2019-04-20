@@ -26,6 +26,7 @@ class Provider(ObjectStorageABC):
             }
         }
         d.update(cm)
+        return d
 
     @DatabaseUpdate()
     def create_dir(self, directory=None):
@@ -118,6 +119,7 @@ class Provider(ObjectStorageABC):
         """
         gets the destination and copies it in source
         :param directory: the directory which either can be a directory or file
+        :param filename: the filename
         :param recursive: in case of directory the recursive referes to all
                           subdirectories in the specified source
         :return: dict

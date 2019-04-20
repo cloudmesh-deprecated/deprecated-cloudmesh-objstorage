@@ -60,7 +60,7 @@ class Provider(ObjectStorageABC):
         return response['Body']
 
     # TODO: use named arguments, see ObjectStorageABC
-    def put(dest_bucket_name, dest_object_name, src_data):
+    def put(self, dest_bucket_name, dest_object_name, src_data):
         """Add an object to an Amazon S3 bucket
 
         The src_data argument must be of type bytes or a string that references
@@ -138,7 +138,7 @@ class Provider(ObjectStorageABC):
         # must return dict
 
     # TODO: use named arguments, see ObjectStorageABC
-    def list(bucket_name):
+    def list(self, bucket_name):
         """List the objects in an Amazon S3 bucket
 
         :param bucket_name: string
@@ -156,7 +156,7 @@ class Provider(ObjectStorageABC):
         return response['Contents']
 
     # TODO: use named arguments, see ObjectStorageABC
-    def delete(bucket_name, object_names):
+    def delete(self, bucket_name, object_names):
         """Delete multiple objects from an Amazon S3 bucket
 
         :param bucket_name: string
