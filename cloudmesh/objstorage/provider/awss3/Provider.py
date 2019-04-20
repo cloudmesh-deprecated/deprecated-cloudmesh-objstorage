@@ -1,5 +1,8 @@
 from cloudmesh.objstorage.ObjectStorageABC import ObjectStorageABC
-
+import boto3
+from cloudmesh.DEBUG import VERBOSE
+from cloudmesh.common.console import Console
+from botocore.exceptions import ClientError
 
 # from libmagic import magic
 #
@@ -44,7 +47,7 @@ class Provider(ObjectStorageABC):
                                                  Key=object_name)
         except ClientError as e:
             # AllAccessDisabled error == bucket or object not found
-            logging.error(e)
+            VERBOSE(e)
             return None
         # Return an open StreamingBody object
         return response['Body']
@@ -72,11 +75,11 @@ class Provider(ObjectStorageABC):
                 object_data = open(src_data, 'rb')
                 # possible FileNotFoundError/IOError exception
             except Exception as e:
-                logging.error(e)
+                VERBOSE(e)
                 return False
         else:
-            logging.error('Type of ' + str(type(src_data)) +
-                          ' for the argument \'src_data\' is not supported.')
+            kind = type(src_data)
+            Console.error(f'Type of {kind} for the argument \'src_data\' is not supported.')
             return False
 
         # Put the object
@@ -89,7 +92,7 @@ class Provider(ObjectStorageABC):
             # AllAccessDisabled error == bucket not found
             # NoSuchKey or InvalidRequest
             # error == (dest bucket/obj == src bucket/obj)
-            logging.error(e)
+            VERBOSE(e)
             return False
         finally:
             if isinstance(src_data, str):
@@ -122,7 +125,7 @@ class Provider(ObjectStorageABC):
                                        Bucket=dest_bucket_name,
                                        Key=dest_object_name)
         except ClientError as e:
-            logging.error(e)
+            VERBOSE(e)
             return False
         return True
         # must return dict
@@ -141,7 +144,7 @@ class Provider(ObjectStorageABC):
             response = self.s3_client.list_objects_v2(Bucket=bucket_name)
         except ClientError as e:
             # AllAccessDisabled error == bucket not found
-            logging.error(e)
+            VERBOSE(e)
             return None
         return response['Contents']
 
@@ -163,7 +166,7 @@ class Provider(ObjectStorageABC):
             self.s3_client.delete_objects(Bucket=bucket_name,
                                           Delete={'Objects': objlist})
         except ClientError as e:
-            logging.error(e)
+            VERBOSE(e)
             return False
         return True
         # must return dict
