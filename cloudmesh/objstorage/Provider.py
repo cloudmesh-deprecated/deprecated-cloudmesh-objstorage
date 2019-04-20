@@ -1,5 +1,6 @@
-from cloudmesh.ojectstore.provider.awss3 import Provider as Awss3Provider
-
+from cloudmesh.ojectstore.provider.awss3.Provider import Provider as Awss3Provider
+from cloudmesh.mongo.DataBaseDecorator import DatabaseUpdate
+from cloudmesh.objectsore.ObjectSoriageABC import ObjectStorageABC
 
 class Provider(ObjectStorageABC):
 
@@ -60,7 +61,8 @@ class Provider(ObjectStorageABC):
         puts the source on the service
         :param service: the name of the service in the yaml file
         :param source: the source which either can be a directory or file
-        :param destination: the destination which either can be a directory or file
+        :param destination: the destination which either can be a directory or
+                            file
         :param recursive: in case of directory the recursive referes to all
                           subdirectories in the specified source
         :return: dict
