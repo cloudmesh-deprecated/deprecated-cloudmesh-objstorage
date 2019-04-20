@@ -16,13 +16,13 @@ class ObjstorageCommand(PluginCommand):
         ::
 
           Usage:
-                objstorage [--objstorage=SERVICE] create dir DIRECTORY
-                objstorage [--objstorage=SERVICE] copy SOURCE DESTINATION [--recursive]
-                objstorage [--objstorage=SERVICE] get SOURCE DESTINATION [--recursive]
-                objstorage [--objstorage=SERVICE] put SOURCE DESTINATION [--recursive]
-                objstorage [--objstorage=SERVICE] list SOURCE [--recursive] [--output=OUTPUT]
-                objstorage [--objstorage=SERVICE] delete SOURCE
-                objstorage [--objstorage=SERVICE] search  DIRECTORY FILENAME [--recursive] [--output=OUTPUT]
+                objstorage [--service=SERVICE] create dir DIRECTORY
+                objstorage [--service=SERVICE] copy SOURCE DESTINATION [--recursive]
+                objstorage [--service=SERVICE] get SOURCE DESTINATION [--recursive]
+                objstorage [--service=SERVICE] put SOURCE DESTINATION [--recursive]
+                objstorage [--service=SERVICE] list SOURCE [--recursive] [--output=OUTPUT]
+                objstorage [--service=SERVICE] delete SOURCE
+                objstorage [--service=SERVICE] search  DIRECTORY FILENAME [--recursive] [--output=OUTPUT]
 
           This command does some useful things.
 
@@ -33,7 +33,7 @@ class ObjstorageCommand(PluginCommand):
 
           Options:
               -h, --help
-              --objstorage=SERVICE  specify the cloud service name like aws-s3
+              --service=SERVICE  specify the cloud service name like aws-s3
 
           Description:
                 commands used to upload, download, list files on different cloud objstorage services.
@@ -60,7 +60,7 @@ class ObjstorageCommand(PluginCommand):
             set objstorage=s3object
             objstorage put SOURCE DESTINATION --recursive
             is the same as
-            objstorage --objstorage=s3object put SOURCE DESTINATION --recursive
+            objstorage --service=s3object put SOURCE DESTINATION --recursive
         """
         # arguments.CONTAINER = arguments["--container"]
 
@@ -69,82 +69,66 @@ class ObjstorageCommand(PluginCommand):
                        "objstorage")
         VERBOSE.print(arguments, verbose=9)
 
-        if arguments.objstorage is None:
+        if arguments.service is None:
             try:
                 v = Variables()
-                arguments.objstorage = v['objstorage']
+                arguments.service = v['objstorage']
             except Exception as e:
-                arguments.objstorage = None
+                arguments.service = None
                 raise ValueError("objstorage provider is not defined")
 
-        arguments.objstorage = Parameter.expand(arguments.objstorage)
+        arguments.service = Parameter.expand(arguments.service)
 
         print(arguments)
 
-        provider = Provider(arguments.objstorage)
+        provider = Provider(arguments.service)
 
         if arguments.copy:
-            result = provider.copy(arguments.objstorage,
+            result = provider.copy(
                                   arguments.SOURCE,
                                   arguments.DESTINATION,
                                   arguments.recursive)
 
         if arguments.get:
-            result = provider.get(arguments.objstorage,
+            result = provider.get(
                                   arguments.SOURCE,
                                   arguments.DESTINATION,
                                   arguments.recursive)
 
         elif arguments.put:
-            result = provider.put(arguments.objstorage,
+            result = provider.put(
                                   arguments.SOURCE,
                                   arguments.DESTINATION,
                                   arguments.recursive)
 
         elif arguments.create and arguments.dir:
-            result = provider.createdir(arguments.objstorage,
+            result = provider.createdir(
                                         arguments.DIRECTORY)
 
         elif arguments.list:
-            for objstorage in arguments.objstorage:
+            for objstorage in arguments.service:
                 provider = Provider(objstorage)
 
-                result = provider.list(arguments.objstorage,
+                result = provider.list(
                                        arguments.SOURCE,
                                        arguments.recursive)
 
         elif arguments.delete:
 
-            for objstorage in arguments.objstorage:
+            for objstorage in arguments.service:
                 provider = Provider(objstorage)
 
-                provider.delete(arguments.objstorage,
+                provider.delete(
                                 arguments.SOURCE)
 
         elif arguments.search:
 
-            for objstorage in arguments.objstorage:
+            for objstorage in arguments.service:
                 provider = Provider(objstorage)
 
-                provider.search(arguments.objstorage,
+                provider.search(
                                 arguments.DIRECTORY,
                                 arguments.FILENAME,
                                 arguments.recursive)
 
-
-        # arguments.FILE = arguments['--file'] or None
-        #
-        # print(arguments)
-        #
-        # m = Manager()
-        #
-        # if arguments.FILE:
-        #     print("option a")
-        #     m.list(path_expand(arguments.FILE))
-        #
-        # elif arguments.list:
-        #     print("option b")
-        #     m.list("just calling list without parameter")
-        #
-        # Console.error("This is just a sample")
-        # return ""
+        return ""
