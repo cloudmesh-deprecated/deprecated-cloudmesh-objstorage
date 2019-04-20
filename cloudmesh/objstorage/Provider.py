@@ -1,11 +1,10 @@
 from cloudmesh.ojectstore.provider.awss3 import Provider as Awss3Provider
 
-class Provider(ObjectStorageABC):
 
+class Provider(ObjectStorageABC):
 
     def __init__(self, service=None, config="~/.cloudmesh/cloudmesh4.yaml"):
         super().__init__(service=service, config=config)
-
 
         if self.kind == "awss3":
             self.provider = Awss3Provider(service=service, config=config)
@@ -25,7 +24,7 @@ class Provider(ObjectStorageABC):
         d.update(cm)
 
     @DatabaseUpdate()
-    def create_dir(self,  directory=None):
+    def create_dir(self, directory=None):
         """
         creates a directory
         :param service: the name of the service in the yaml file
@@ -33,11 +32,10 @@ class Provider(ObjectStorageABC):
         :return: dict
         """
         d = self.provider.create_dir(self,
-                              directory=directory)
+                                     directory=directory)
         d = self.cm_update(d)
 
         return d
-
 
     @DatabaseUpdate()
     def list(self, source=None, recursive=False):
@@ -50,8 +48,8 @@ class Provider(ObjectStorageABC):
         :return: dict
         """
         d = self.provider.list(self,
-                              source=source,
-                              recusrive=recursive)
+                               source=source,
+                               recusrive=recursive)
         d = self.cm_update(d)
 
         return d
@@ -107,8 +105,8 @@ class Provider(ObjectStorageABC):
         :return: dict
         """
         d = self.provider.delete(self,
-                              source=source,
-                              recusrive=recusrive)
+                                 source=source,
+                                 recusrive=recusrive)
 
         d = self.cm_update(d)
 
@@ -132,8 +130,3 @@ class Provider(ObjectStorageABC):
         d = self.cm_update(d)
 
         return d
-
-
-
-
-

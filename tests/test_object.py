@@ -11,33 +11,35 @@ from cloudmesh.common.util import path_expand
 from pathlib import Path
 from cloudmesh.common.util import writefile
 
+
 class TestObject:
 
     def create_file(self, location, content):
-
         d = Path(os.path.dirname(path_expand(location)))
         print()
-        print ("TESTDIR:",  d)
+        print("TESTDIR:", d)
 
         d.mkdir(parents=True, exist_ok=True)
 
         writefile(path_expand(location), content)
 
     def setup(self):
-        self.p = cloudmesh.storage.provider.awss3.Provider.Provider(service="awss3")
+        self.p = cloudmesh.storage.provider.awss3.Provider.Provider(
+            service="awss3")
         print('Success')
 
     def test_01_create_source(self):
         # create source dir
 
         # BUG
-        self.destination = "set the destination location here and use in tests" # TODO
+        self.destination = "set the destination location here and use in tests"  # TODO
 
         self.sourcedir = path_expand("~/.cloudmesh/objstorage/test/")
 
-        self.create_file("~/.cloudmesh/objstorage/test/stest.txt", "content of stest")
-        self.create_file("~/.cloudmesh/objstorage/test/stest1.txt", "content of stest1")
-
+        self.create_file("~/.cloudmesh/objstorage/test/stest.txt",
+                         "content of stest")
+        self.create_file("~/.cloudmesh/objstorage/test/stest1.txt",
+                         "content of stest1")
 
         # test if the files are ok
         assert True
@@ -53,13 +55,11 @@ class TestObject:
 
         assert file is not None
 
-
-
     def test_02_put(self):
         HEADING()
         src = path_expand("~/abctest.pptx")
         print(src)
-        #dst = path_expand("~/.cloudmesh/objstorage/test/a/b/")
+        # dst = path_expand("~/.cloudmesh/objstorage/test/a/b/")
         dst = "/abctest.pptx"
         print(dst)
         test_file = self.p.put('aws', src, dst)

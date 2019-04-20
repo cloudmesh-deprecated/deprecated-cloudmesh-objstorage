@@ -12,7 +12,6 @@ import pytest
 from cloudmesh_installer.install.test import readfile, run
 
 
-
 @pytest.mark.incremental
 class Test_objstorage_installer:
 
@@ -45,7 +44,8 @@ class Test_objstorage_installer:
         print(result)
         assert os.path.isdir("tmp/cloudmesh-cmd5/cloudmesh_cmd5.egg-info")
         assert os.path.isdir("tmp/cloudmesh-cloud/cloudmesh_cloud.egg-info")
-        assert os.path.isdir("tmp/cloudmesh-objstorage/cloudmesh_objstorage.egg-info")
+        assert os.path.isdir(
+            "tmp/cloudmesh-objstorage/cloudmesh_objstorage.egg-info")
 
     def test_cms_help(self):
         cmd = "cms help"
@@ -70,8 +70,6 @@ class Test_objstorage_installer:
         assert "cloudmesh.common" in result
         assert "cloudmesh.cloud" in result
         assert "cloudmesh.objstorage" in result
-
-
 
 
 class other:

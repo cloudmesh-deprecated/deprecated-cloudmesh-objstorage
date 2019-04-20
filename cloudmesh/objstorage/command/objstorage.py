@@ -8,6 +8,7 @@ from cloudmesh.objstorage.provider.awss3.Provider import Provider
 from pprint import pprint
 
 
+# noinspection PyPep8
 class ObjstorageCommand(PluginCommand):
 
     # noinspection PyUnusedLocal

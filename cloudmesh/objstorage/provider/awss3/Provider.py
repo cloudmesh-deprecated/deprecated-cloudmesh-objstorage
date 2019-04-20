@@ -4,18 +4,18 @@ import json
 from cloudmesh.storage.provider.gdrive.Authentication import Authentication
 import httplib2
 
-
 from apiclient.http import MediaFileUpload
 from apiclient.http import MediaIoBaseDownload
 from cloudmesh.management.configuration.config import Config
 from cloudmesh.common.util import path_expand
 from cloudmesh.objstorage.ObjectStorageABC import ObjectStorageABC
+
+
 # from libmagic import magic
 #
 # BUG: des not follow named arguments in abc class
 #
 class Provider(ObjectStorageABC):
-
 
     def __init__(self, service=None, config="~/.cloudmesh/cloudmesh4.yaml"):
         super().__init__(service=service, config=config)
@@ -32,7 +32,7 @@ class Provider(ObjectStorageABC):
         self.s3_client = boto3.client('s3',
                                       aws_access_key_id=ACCESS_KEY_ID,
                                       aws_secret_access_key=SECRET_ACCESS_KEY
-                                      #region_name=self.credentials['region']
+                                      # region_name=self.credentials['region']
                                       )
         self.directory_marker_file_name = 'marker.txt'
         self.storage_dict = {}
@@ -50,7 +50,8 @@ class Provider(ObjectStorageABC):
         # Retrieve the object
         # s3 = boto3.client('s3')
         try:
-            response = self.s3_client.get_object(Bucket=bucket_name, Key=object_name)
+            response = self.s3_client.get_object(Bucket=bucket_name,
+                                                 Key=object_name)
         except ClientError as e:
             # AllAccessDisabled error == bucket or object not found
             logging.error(e)
@@ -68,7 +69,8 @@ class Provider(ObjectStorageABC):
         :param dest_bucket_name: string
         :param dest_object_name: string
         :param src_data: bytes of data or string reference to file spec
-        :return: True if src_data was added to dest_bucket/dest_object, otherwise
+        :return: True if src_data was added to dest_bucket/dest_object,
+                 otherwise
         False
         """
 
@@ -90,10 +92,13 @@ class Provider(ObjectStorageABC):
         # Put the object
         # s3 = boto3.client('s3')
         try:
-            self.s3_client.put_object(Bucket=dest_bucket_name, Key=dest_object_name, Body=object_data)
+            self.s3_client.put_object(Bucket=dest_bucket_name,
+                                      Key=dest_object_name,
+                                      Body=object_data)
         except ClientError as e:
             # AllAccessDisabled error == bucket not found
-            # NoSuchKey or InvalidRequest error == (dest bucket/obj == src bucket/obj)
+            # NoSuchKey or InvalidRequest
+            # error == (dest bucket/obj == src bucket/obj)
             logging.error(e)
             return False
         finally:
@@ -102,10 +107,9 @@ class Provider(ObjectStorageABC):
         return True
         # must return dict
 
-
     # TODO: use named arguments, see ObjectStorageABC
     def copy(src_bucket_name, src_object_name,
-                    dest_bucket_name, dest_object_name=None):
+             dest_bucket_name, dest_object_name=None):
         """Copy an Amazon S3 bucket object
 
         :param src_bucket_name: string
@@ -124,8 +128,9 @@ class Provider(ObjectStorageABC):
         # Copy the object
         # s3 = boto3.client('s3')
         try:
-            self.s3_client.copy_object(CopySource=copy_source, Bucket=dest_bucket_name,
-                           Key=dest_object_name)
+            self.s3_client.copy_object(CopySource=copy_source,
+                                       Bucket=dest_bucket_name,
+                                       Key=dest_object_name)
         except ClientError as e:
             logging.error(e)
             return False
@@ -165,7 +170,8 @@ class Provider(ObjectStorageABC):
         # Delete the objects
         # s3 = boto3.client('s3')
         try:
-            self.s3_client.delete_objects(Bucket=bucket_name, Delete={'Objects': objlist})
+            self.s3_client.delete_objects(Bucket=bucket_name,
+                                          Delete={'Objects': objlist})
         except ClientError as e:
             logging.error(e)
             return False

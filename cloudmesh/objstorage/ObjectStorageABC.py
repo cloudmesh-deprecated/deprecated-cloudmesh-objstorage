@@ -2,7 +2,7 @@ from abc import ABCMeta, abstractmethod
 from cloudmesh.management.configuration.config import Config
 
 
-# noinspection PyUnusedLocal
+# noinspection PyUnusedLocal,PyPep8
 class ObjectStorageABC(metaclass=ABCMeta):
 
     def __init__(self, service=None, config="~/.cloudmesh/cloudmesh4.yaml"):
@@ -15,7 +15,6 @@ class ObjectStorageABC(metaclass=ABCMeta):
         except:
             raise ValueError(f"object storage service {service} not specified")
 
-
     def create_dir(self, directory=None):
         """
         creates a directory
@@ -25,7 +24,7 @@ class ObjectStorageABC(metaclass=ABCMeta):
         """
         raise NotImplementedError
 
-    def list(self,  source=None, recursive=False):
+    def list(self, source=None, recursive=False):
         """
         lists the information as dict
         :param service: the name of the service in the yaml file
@@ -41,7 +40,8 @@ class ObjectStorageABC(metaclass=ABCMeta):
         puts the source on the service
         :param service: the name of the service in the yaml file
         :param source: the source which either can be a directory or file
-        :param destination: the destination which either can be a directory or file
+        :param destination: the destination which either can be a directory or
+                            file
         :param recursive: in case of directory the recursive referes to all
                           subdirectories in the specified source
         :return: dict
@@ -53,7 +53,8 @@ class ObjectStorageABC(metaclass=ABCMeta):
         gets the destination and copies it in source
         :param service: the name of the service in the yaml file
         :param source: the source which either can be a directory or file
-        :param destination: the destination which either can be a directory or file
+        :param destination: the destination which either can be a directory or
+                            file
         :param recursive: in case of directory the recursive referes to all
                           subdirectories in the specified source
         :return: dict
