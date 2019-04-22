@@ -81,7 +81,7 @@ class Provider(ObjectStorageABC):
         else:
             kind = type(src_data)
             Console.error(
-                f'Type of {kind} for the argument \'src_data\' is not supported.')
+                f"Type of {kind} for the argument 'src_data' is not supported.")
             return False
 
         # Put the object
