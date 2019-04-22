@@ -12,20 +12,16 @@ class Provider(ObjectStorageABC):
 
     def __init__(self, service=None, config="~/.cloudmesh/cloudmesh4.yaml"):
         super().__init__(service=service, config=config)
-        ACCESS_KEY_ID: ""
-        SECRET_ACCESS_KEY: ""
         self.container_name = self.credentials['objstorage']
-        # self.s3_resource = boto3.resource('s3',
-        #                                   aws_access_key_id=self.credentials[
-        #                                       'ACCESS_KEY_ID'],
-        #                                   aws_secret_access_key=
-        #                                   self.credentials['SECRET_ACCESS_KEY'],
-        #                                   #region_name=self.credentials['region']
-        #                                   )
+        self.s3_resource = boto3.resource('s3',
+                                          aws_access_key_id=self.credentials[
+                                              'ACCESS_KEY_ID'],
+                                          aws_secret_access_key=
+                                          self.credentials['SECRET_ACCESS_KEY']
+                                          )
         self.s3_client = boto3.client('s3',
                                       aws_access_key_id=ACCESS_KEY_ID,
                                       aws_secret_access_key=SECRET_ACCESS_KEY
-                                      # region_name=self.credentials['region']
                                       )
         self.directory_marker_file_name = 'marker.txt'
         self.storage_dict = {}
