@@ -20,8 +20,10 @@ class Provider(ObjectStorageABC):
                                           self.credentials['SECRET_ACCESS_KEY']
                                           )
         self.s3_client = boto3.client('s3',
-                                      aws_access_key_id=ACCESS_KEY_ID,
-                                      aws_secret_access_key=SECRET_ACCESS_KEY
+                                          aws_access_key_id=self.credentials[
+                                              'ACCESS_KEY_ID'],
+                                          aws_secret_access_key=
+                                          self.credentials['SECRET_ACCESS_KEY']
                                       )
         self.directory_marker_file_name = 'marker.txt'
         self.storage_dict = {}
