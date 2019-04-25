@@ -1,8 +1,4 @@
 ###############################################################
-<<<<<<< HEAD
-# pip install .; pytest -v --capture=no -v --nocapture tests/test_objstorage_installer.py:Test_objstorage_installer.test_001
-=======
->>>>>>> cb1529aa1c9c3f2d9c849e9b31adc72174d780ea
 # pytest -v --capture=no tests/test_objstorage_installer.py
 # pytest -v  tests/test_installer.py
 ###############################################################
@@ -15,10 +11,6 @@ import pytest
 from cloudmesh_installer.install.test import readfile, run
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> cb1529aa1c9c3f2d9c849e9b31adc72174d780ea
 @pytest.mark.incremental
 class Test_objstorage_installer:
 
@@ -51,12 +43,8 @@ class Test_objstorage_installer:
         print(result)
         assert os.path.isdir("tmp/cloudmesh-cmd5/cloudmesh_cmd5.egg-info")
         assert os.path.isdir("tmp/cloudmesh-cloud/cloudmesh_cloud.egg-info")
-<<<<<<< HEAD
-        assert os.path.isdir("tmp/cloudmesh-objstorage/cloudmesh_objstorage.egg-info")
-=======
         assert os.path.isdir(
             "tmp/cloudmesh-objstorage/cloudmesh_objstorage.egg-info")
->>>>>>> cb1529aa1c9c3f2d9c849e9b31adc72174d780ea
 
     def test_cms_help(self):
         cmd = "cms help"
@@ -83,11 +71,6 @@ class Test_objstorage_installer:
         assert "cloudmesh.objstorage" in result
 
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> cb1529aa1c9c3f2d9c849e9b31adc72174d780ea
 class other:
     def test_delete_dir(self):
         path = "tmp"
