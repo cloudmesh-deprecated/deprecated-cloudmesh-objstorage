@@ -8,13 +8,16 @@ class ObjectStorageABC(metaclass=ABCMeta):
 
     def __init__(self, service=None, config="~/.cloudmesh/cloudmesh4.yaml"):
         try:
-            self.config = Config()
-            self.credentials = config['cloudmesh']['objstorage'][service][
-                'credentials']
-            self.kind = config['cloudmesh']['objstorage']['kind']
+            self.config = Config(config_path=config)
+
+            spec = self.config["cloudmesh.objstorage"]
+            self.credentials = spec[service]['credentials']
+            self.kind = spec[service]['cm']['kind']
+            self.cloud = service
             self.service = service
-        except:
+        except Exception  as e:
             raise ValueError(f"object storage service {service} not specified")
+            print (e)
 
     def create_dir(self, directory=None):
         """

@@ -1,8 +1,8 @@
 # noinspection PyPep8
-from cloudmesh.ojectstore.provider.awss3.Provider import \
+from cloudmesh.objstorage.provider.awss3.Provider import \
     Provider as Awss3Provider
 from cloudmesh.mongo.DataBaseDecorator import DatabaseUpdate
-from cloudmesh.objectsore.ObjectSoriageABC import ObjectStorageABC
+from cloudmesh.objstorage.ObjectStorageABC import ObjectStorageABC
 
 
 class Provider(ObjectStorageABC):

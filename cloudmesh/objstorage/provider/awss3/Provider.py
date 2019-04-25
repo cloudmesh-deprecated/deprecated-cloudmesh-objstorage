@@ -33,7 +33,6 @@ class Provider(ObjectStorageABC):
     def get(self, bucket_name, object_name):
 
         """Retrieve an object from an Amazon S3 bucket
-
         :param bucket_name: string
         :param object_name: string
         :return: botocore.response.StreamingBody object. If error, return None.
@@ -54,10 +53,8 @@ class Provider(ObjectStorageABC):
     # TODO: use named arguments, see ObjectStorageABC
     def put(self, dest_bucket_name, dest_object_name, src_data):
         """Add an object to an Amazon S3 bucket
-
         The src_data argument must be of type bytes or a string that references
         a file specification.
-
         :param dest_bucket_name: string
         :param dest_object_name: string
         :param src_data: bytes of data or string reference to file spec
@@ -104,7 +101,6 @@ class Provider(ObjectStorageABC):
     def copy(self, src_bucket_name, src_object_name,
              dest_bucket_name, dest_object_name=None):
         """Copy an Amazon S3 bucket object
-
         :param src_bucket_name: string
         :param src_object_name: string
         :param dest_bucket_name: string. Must already exist.
@@ -133,7 +129,6 @@ class Provider(ObjectStorageABC):
     # TODO: use named arguments, see ObjectStorageABC
     def list(self, bucket_name):
         """List the objects in an Amazon S3 bucket
-
         :param bucket_name: string
         :return: List of bucket objects. If error, return None.
         """
@@ -151,7 +146,6 @@ class Provider(ObjectStorageABC):
     # TODO: use named arguments, see ObjectStorageABC
     def delete(self, bucket_name, object_names):
         """Delete multiple objects from an Amazon S3 bucket
-
         :param bucket_name: string
         :param object_names: list of strings
         :return: True if the referenced objects were deleted, otherwise False

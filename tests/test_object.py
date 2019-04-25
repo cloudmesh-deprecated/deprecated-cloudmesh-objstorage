@@ -5,7 +5,7 @@
 import os
 from pprint import pprint
 
-import cloudmesh.storage.provider.awss3.Provider
+import cloudmesh.objstorage.provider.awss3.Provider
 from cloudmesh.common.util import HEADING
 from cloudmesh.common.util import path_expand
 from pathlib import Path
@@ -36,6 +36,12 @@ class TestObject:
 
         self.sourcedir = path_expand("~/.cloudmesh/objstorage/test/")
 
+        self.create_file("~/.cloudmesh/objstorage/test/stest1.pkl",
+                         "content of stest1")
+        self.create_file("~/.cloudmesh/objstorage/test/stest1.parquet",
+                         "content of stest1")
+        self.create_file("~/.cloudmesh/objstorage/test/stest1.obj",
+                         "content of stest1")
         self.create_file("~/.cloudmesh/objstorage/test/stest.txt",
                          "content of stest")
         self.create_file("~/.cloudmesh/objstorage/test/stest1.txt",
@@ -46,9 +52,9 @@ class TestObject:
 
     def test_03_get(self):
         HEADING()
-        src = path_expand("/test/abctest.pptx")
+        src = path_expand("/test/stest1.parquet")
         print(src)
-        dst = path_expand("~/testget123.pptx")
+        dst = path_expand("~/test/stest1.pkl")
         print(dst)
         file = self.p.get('aws', src, dst)
         pprint(file)
