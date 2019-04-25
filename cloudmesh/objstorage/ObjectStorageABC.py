@@ -1,32 +1,35 @@
-from abc import ABCMeta, abstractmethod
+from abc import ABCMeta
+
 from cloudmesh.management.configuration.config import Config
 
 
-# noinspection PyUnusedLocal
+# noinspection PyUnusedLocal,PyPep8
 class ObjectStorageABC(metaclass=ABCMeta):
 
-    def __init__(self, cloud=None, config="~/.cloudmesh/cloudmesh4.yaml"):
+    def __init__(self, service=None, config="~/.cloudmesh/cloudmesh4.yaml"):
         try:
-            self.config = Config()
-            self.credentials = config['cloudmesh']['objstorage'][cloud][
-                'credentials']
-            self.kind = config['cloudmesh']['objstorage']['kind']
-        except:
-            raise ValueError(f"object storage service {cloud} not specified")
+            self.config = Config(config_path=config)
 
-    def create_dir(self, service=None, directory=None):
+            spec = self.config["cloudmesh.objstorage"]
+            self.credentials = spec[service]['credentials']
+            self.kind = spec[service]['cm']['kind']
+            self.cloud = service
+            self.service = service
+        except Exception  as e:
+            raise ValueError(f"object storage service {service} not specified")
+            print (e)
+
+    def create_dir(self, directory=None):
         """
         creates a directory
-        :param service: the name of the service in the yaml file
         :param directory: the name of the directory
         :return: dict
         """
         raise NotImplementedError
 
-    def list(self, service=None, source=None, recursive=False):
+    def list(self, source=None, recursive=False):
         """
         lists the information as dict
-        :param service: the name of the service in the yaml file
         :param source: the source which either can be a directory or file
         :param recursive: in case of directory the recursive referes to all
                           subdirectories in the specified source
@@ -34,34 +37,33 @@ class ObjectStorageABC(metaclass=ABCMeta):
         """
         raise NotImplementedError
 
-    def put(self, service=None, source=None, destination=None, recusrive=False):
+    def put(self, source=None, destination=None, recursive=False):
         """
         puts the source on the service
-        :param service: the name of the service in the yaml file
         :param source: the source which either can be a directory or file
-        :param destination: the destination which either can be a directory or file
+        :param destination: the destination which either can be a directory or
+                            file
         :param recursive: in case of directory the recursive referes to all
                           subdirectories in the specified source
         :return: dict
         """
         raise NotImplementedError
 
-    def get(self, service=None, source=None, destination=None, recusrive=False):
+    def get(self, source=None, destination=None, recursive=False):
         """
         gets the destination and copies it in source
-        :param service: the name of the service in the yaml file
         :param source: the source which either can be a directory or file
-        :param destination: the destination which either can be a directory or file
+        :param destination: the destination which either can be a directory or
+                            file
         :param recursive: in case of directory the recursive referes to all
                           subdirectories in the specified source
         :return: dict
         """
         raise NotImplementedError
 
-    def delete(self, service=None, source=None, recusrive=False):
+    def delete(self, source=None, recursive=False):
         """
         deletes the source
-        :param service: the name of the service in the yaml file
         :param source: the source which either can be a directory or file
         :param recursive: in case of directory the recursive referes to all
                           subdirectories in the specified source
@@ -69,12 +71,11 @@ class ObjectStorageABC(metaclass=ABCMeta):
         """
         raise NotImplementedError
 
-    def search(self, service=None, directory=None, filename=None,
-               recusrive=False):
+    def search(self, directory=None, filename=None, recursive=False):
         """
         gets the destination and copies it in source
-        :param service: the name of the service in the yaml file
         :param directory: the directory which either can be a directory or file
+        :param filename: the filename
         :param recursive: in case of directory the recursive referes to all
                           subdirectories in the specified source
         :return: dict

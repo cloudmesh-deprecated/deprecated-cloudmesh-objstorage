@@ -1,47 +1,37 @@
-import io
-import json
-
-from cloudmesh.storage.provider.gdrive.Authentication import Authentication
-import httplib2
-
-
-from apiclient.http import MediaFileUpload
-from apiclient.http import MediaIoBaseDownload
-from cloudmesh.management.configuration.config import Config
-from cloudmesh.common.util import path_expand
 from cloudmesh.objstorage.ObjectStorageABC import ObjectStorageABC
+import boto3
+from cloudmesh.DEBUG import VERBOSE
+from cloudmesh.common.console import Console
+from botocore.exceptions import ClientError
+
 # from libmagic import magic
 #
 # BUG: des not follow named arguments in abc class
 #
 class Provider(ObjectStorageABC):
 
-
     def __init__(self, service=None, config="~/.cloudmesh/cloudmesh4.yaml"):
         super().__init__(service=service, config=config)
-        ACCESS_KEY_ID: "AKIAYBVIJCLU3JP77SVY"
-        SECRET_ACCESS_KEY: "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"
         self.container_name = self.credentials['objstorage']
-        # self.s3_resource = boto3.resource('s3',
-        #                                   aws_access_key_id=self.credentials[
-        #                                       'ACCESS_KEY_ID'],
-        #                                   aws_secret_access_key=
-        #                                   self.credentials['SECRET_ACCESS_KEY'],
-        #                                   #region_name=self.credentials['region']
-        #                                   )
+        self.s3_resource = boto3.resource('s3',
+                                          aws_access_key_id=self.credentials[
+                                              'ACCESS_KEY_ID'],
+                                          aws_secret_access_key=
+                                          self.credentials['SECRET_ACCESS_KEY']
+                                          )
         self.s3_client = boto3.client('s3',
-                                      aws_access_key_id=ACCESS_KEY_ID,
-                                      aws_secret_access_key=SECRET_ACCESS_KEY
-                                      #region_name=self.credentials['region']
+                                          aws_access_key_id=self.credentials[
+                                              'ACCESS_KEY_ID'],
+                                          aws_secret_access_key=
+                                          self.credentials['SECRET_ACCESS_KEY']
                                       )
         self.directory_marker_file_name = 'marker.txt'
         self.storage_dict = {}
 
-
+    # TODO: use named arguments, see ObjectStorageABC
     def get(self, bucket_name, object_name):
 
         """Retrieve an object from an Amazon S3 bucket
-
         :param bucket_name: string
         :param object_name: string
         :return: botocore.response.StreamingBody object. If error, return None.
@@ -50,24 +40,25 @@ class Provider(ObjectStorageABC):
         # Retrieve the object
         # s3 = boto3.client('s3')
         try:
-            response = self.s3_client.get_object(Bucket=bucket_name, Key=object_name)
+            response = self.s3_client.get_object(Bucket=bucket_name,
+                                                 Key=object_name)
         except ClientError as e:
             # AllAccessDisabled error == bucket or object not found
-            logging.error(e)
+            VERBOSE(e)
             return None
         # Return an open StreamingBody object
         return response['Body']
 
-    def put(dest_bucket_name, dest_object_name, src_data):
+    # TODO: use named arguments, see ObjectStorageABC
+    def put(self, dest_bucket_name, dest_object_name, src_data):
         """Add an object to an Amazon S3 bucket
-
         The src_data argument must be of type bytes or a string that references
         a file specification.
-
         :param dest_bucket_name: string
         :param dest_object_name: string
         :param src_data: bytes of data or string reference to file spec
-        :return: True if src_data was added to dest_bucket/dest_object, otherwise
+        :return: True if src_data was added to dest_bucket/dest_object,
+                 otherwise
         False
         """
 
@@ -79,31 +70,35 @@ class Provider(ObjectStorageABC):
                 object_data = open(src_data, 'rb')
                 # possible FileNotFoundError/IOError exception
             except Exception as e:
-                logging.error(e)
+                VERBOSE(e)
                 return False
         else:
-            logging.error('Type of ' + str(type(src_data)) +
-                          ' for the argument \'src_data\' is not supported.')
+            kind = type(src_data)
+            Console.error(f'Type of {kind} for the argument \'src_data\' is not supported.')
             return False
 
         # Put the object
         # s3 = boto3.client('s3')
         try:
-            self.s3_client.put_object(Bucket=dest_bucket_name, Key=dest_object_name, Body=object_data)
+            self.s3_client.put_object(Bucket=dest_bucket_name,
+                                      Key=dest_object_name,
+                                      Body=object_data)
         except ClientError as e:
             # AllAccessDisabled error == bucket not found
-            # NoSuchKey or InvalidRequest error == (dest bucket/obj == src bucket/obj)
-            logging.error(e)
+            # NoSuchKey or InvalidRequest
+            # error == (dest bucket/obj == src bucket/obj)
+            VERBOSE(e)
             return False
         finally:
             if isinstance(src_data, str):
                 object_data.close()
         return True
+        # must return dict
 
-    def copy(src_bucket_name, src_object_name,
-                    dest_bucket_name, dest_object_name=None):
+    # TODO: use named arguments, see ObjectStorageABC
+    def copy(self, src_bucket_name, src_object_name,
+             dest_bucket_name, dest_object_name=None):
         """Copy an Amazon S3 bucket object
-
         :param src_bucket_name: string
         :param src_object_name: string
         :param dest_bucket_name: string. Must already exist.
@@ -120,16 +115,18 @@ class Provider(ObjectStorageABC):
         # Copy the object
         # s3 = boto3.client('s3')
         try:
-            self.s3_client.copy_object(CopySource=copy_source, Bucket=dest_bucket_name,
-                           Key=dest_object_name)
+            self.s3_client.copy_object(CopySource=copy_source,
+                                       Bucket=dest_bucket_name,
+                                       Key=dest_object_name)
         except ClientError as e:
-            logging.error(e)
+            VERBOSE(e)
             return False
         return True
+        # must return dict
 
-    def list(bucket_name):
+    # TODO: use named arguments, see ObjectStorageABC
+    def list(self, bucket_name):
         """List the objects in an Amazon S3 bucket
-
         :param bucket_name: string
         :return: List of bucket objects. If error, return None.
         """
@@ -140,13 +137,13 @@ class Provider(ObjectStorageABC):
             response = self.s3_client.list_objects_v2(Bucket=bucket_name)
         except ClientError as e:
             # AllAccessDisabled error == bucket not found
-            logging.error(e)
+            VERBOSE(e)
             return None
         return response['Contents']
 
-    def delete(bucket_name, object_names):
+    # TODO: use named arguments, see ObjectStorageABC
+    def delete(self, bucket_name, object_names):
         """Delete multiple objects from an Amazon S3 bucket
-
         :param bucket_name: string
         :param object_names: list of strings
         :return: True if the referenced objects were deleted, otherwise False
@@ -158,8 +155,10 @@ class Provider(ObjectStorageABC):
         # Delete the objects
         # s3 = boto3.client('s3')
         try:
-            self.s3_client.delete_objects(Bucket=bucket_name, Delete={'Objects': objlist})
+            self.s3_client.delete_objects(Bucket=bucket_name,
+                                          Delete={'Objects': objlist})
         except ClientError as e:
-            logging.error(e)
+            VERBOSE(e)
             return False
         return True
+        # must return dict
