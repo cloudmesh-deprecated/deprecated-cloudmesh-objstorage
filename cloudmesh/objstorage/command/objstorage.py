@@ -49,6 +49,19 @@ class ObjstorageCommand(PluginCommand):
             objstorage put SOURCE DESTINATION --recursive
             is the same as
             objstorage --service=s3object put SOURCE DESTINATION --recursive
+
+            Create a multi file directy in a bucket
+
+            $ cms set objstorge=awss3
+            $ tree
+                a/a1.tx
+                a/b/b1.txt
+
+            cms objstorage create a/b/
+            cms objstorage put a/b/b1.txt /a/b
+
+
+
         """
         # arguments.CONTAINER = arguments["--container"]
 
