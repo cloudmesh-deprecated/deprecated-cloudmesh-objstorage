@@ -1,6 +1,5 @@
-## Cloudmesh Object Store
+# THIS DIRECTORY IS GOING TO BE DEPRECATED AND REMOVED
 
+All development will be shifted to 
 
-The documentation is at
-
-<https://github.com/cloudmesh/cloudmesh-manual/blob/master/docs-source/source/objectstore.md>
+cloudmesh-storage
