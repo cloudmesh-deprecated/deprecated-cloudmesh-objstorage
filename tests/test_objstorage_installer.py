@@ -60,6 +60,7 @@ class Test_objstorage_installer:
         print(result)
         assert "cloudmesh.common" in result
         assert "cloudmesh.cloud" in result
+        assert "cloudmesh.storage" in result
         assert "cloudmesh.objstorage" in result
 
     def test_cms_version(self):
@@ -68,6 +69,7 @@ class Test_objstorage_installer:
         print(result)
         assert "cloudmesh.common" in result
         assert "cloudmesh.cloud" in result
+        assert "cloudmesh.storage" in result
         assert "cloudmesh.objstorage" in result
 
 

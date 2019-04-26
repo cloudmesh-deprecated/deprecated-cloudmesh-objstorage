@@ -1,4 +1,4 @@
-from cloudmesh.objstorage.ObjectStorageABC import ObjectStorageABC
+from cloudmesh.storage.StorageABC import StorageABC
 import boto3
 from cloudmesh.DEBUG import VERBOSE
 from cloudmesh.common.console import Console
@@ -9,7 +9,7 @@ from botocore.exceptions import ClientError
 #
 # BUG: des not follow named arguments in abc class
 #
-class Provider(ObjectStorageABC):
+class Provider(StorageABC):
 
     def __init__(self, service=None, config="~/.cloudmesh/cloudmesh4.yaml"):
         super().__init__(service=service, config=config)

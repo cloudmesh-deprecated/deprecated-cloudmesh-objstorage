@@ -1,7 +1,12 @@
 from abc import ABCMeta
 
 from cloudmesh.management.configuration.config import Config
+import warnings
+import sys
 
+warnings.warn("ObjectStorageABC: THIS METHOD IS DEPRECATED AND StorageABC MUST BE USED")
+
+sys.exit(1)
 
 # noinspection PyUnusedLocal,PyPep8
 class ObjectStorageABC(metaclass=ABCMeta):
