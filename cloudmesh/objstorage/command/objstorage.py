@@ -1,5 +1,5 @@
 from cloudmesh.common.parameter import Parameter
-from cloudmesh.objstorage.provider.awss3.Provider import Provider
+from cloudmesh.objstorage.provider.awsobjectstore.Provider import Provider
 from cloudmesh.shell.command import PluginCommand, map_parameters
 from cloudmesh.shell.command import command
 from cloudmesh.variables import Variables

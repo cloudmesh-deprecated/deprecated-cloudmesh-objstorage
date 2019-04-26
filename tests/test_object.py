@@ -5,7 +5,7 @@
 import os
 from pprint import pprint
 
-import cloudmesh.objstorage.provider.awss3.Provider
+import cloudmesh.objstorage.provider.awsobjectstore.Provider
 from cloudmesh.common.util import HEADING
 from cloudmesh.common.util import path_expand
 from pathlib import Path
@@ -24,7 +24,7 @@ class TestObject:
         writefile(path_expand(location), content)
 
     def setup(self):
-        self.p = cloudmesh.objstorage.provider.awss3.Provider.Provider(
+        self.p = cloudmesh.objstorage.provider.awsobjectstore.Provider.Provider(
             service="awss3")
         print('Success')
 

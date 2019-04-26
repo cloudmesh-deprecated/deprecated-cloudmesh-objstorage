@@ -1,5 +1,5 @@
 # noinspection PyPep8
-from cloudmesh.objstorage.provider.awss3.Provider import \
+from cloudmesh.objstorage.provider.awsobjectstore.Provider import \
     Provider as Awss3Provider
 from cloudmesh.mongo.DataBaseDecorator import DatabaseUpdate
 from cloudmesh.objstorage.ObjectStorageABC import ObjectStorageABC
@@ -10,7 +10,7 @@ class Provider(ObjectStorageABC):
     def __init__(self, service=None, config="~/.cloudmesh/cloudmesh4.yaml"):
         super().__init__(service=service, config=config)
 
-        if self.kind == "awss3":
+        if self.kind == "awsobjectstore":
             self.provider = Awss3Provider(service=service, config=config)
         else:
             raise ValueError(

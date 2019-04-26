@@ -74,7 +74,7 @@ Alternatively, objstorage command can also be called directly without starting t
 cms shell.
 
 ```bash
-$ cms objstorage --objstorage='awss3' list ''
+$ cms objstorage --objstorage=awsobjectstore list ''
 ```
 
 ### objstorage functions overview
