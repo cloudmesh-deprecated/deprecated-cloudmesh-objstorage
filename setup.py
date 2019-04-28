@@ -18,20 +18,12 @@
 from setuptools import find_packages, setup
 import io
 
-<<<<<<< HEAD
-=======
-
->>>>>>> cb1529aa1c9c3f2d9c849e9b31adc72174d780ea
 def readfile(filename):
     with io.open(filename, encoding="utf-8") as stream:
         return stream.read().split()
 
 
-<<<<<<< HEAD
-#requiers = readfile ('requirements.txt')
-=======
 # requiers = readfile ('requirements.txt')
->>>>>>> cb1529aa1c9c3f2d9c849e9b31adc72174d780ea
 #
 # add minimum requirements here
 #
@@ -47,21 +39,13 @@ version = readfile("VERSION")[0].strip()
 with open('README.md') as f:
     long_description = f.read()
 
-<<<<<<< HEAD
 
-
-=======
->>>>>>> cb1529aa1c9c3f2d9c849e9b31adc72174d780ea
 NAME = "cloudmesh-objstorage"
 DESCRIPTION = "A command called objstorage and foo for the cloudmesh shell"
 AUTHOR = "Gregor von Laszewski"
 AUTHOR_EMAIL = "laszewski@gmail.com"
 URL = "https://github.com/cloudmesh/cloudmesh-objstorage"
 
-<<<<<<< HEAD
-
-=======
->>>>>>> cb1529aa1c9c3f2d9c849e9b31adc72174d780ea
 setup(
     name=NAME,
     author=AUTHOR,
